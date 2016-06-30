@@ -1,0 +1,2 @@
+defmodule SwaggerPhoenix do
+end
