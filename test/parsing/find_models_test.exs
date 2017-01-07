@@ -14,7 +14,6 @@ defmodule SwaggerPhoenixTest.FindModelsTest do
                            plural: "orders",
                            attr: [complete: :boolean,
                                   id: :integer,
-                                  name: :string,
                                   petId: :integer,
                                   quantity: :integer,
                                   shipDate: :string,
