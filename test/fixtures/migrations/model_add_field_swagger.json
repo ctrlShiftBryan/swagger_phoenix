@@ -1,0 +1,19 @@
+{
+	"swagger": "2.0",
+	"definitions": {
+		"Order": {
+			"type": "object",
+			"properties": {
+				"id": {
+					"type": "integer"
+				},
+				"newField": {
+					"type": "string"
+				},
+				"status": {
+					"type": "string"
+				}
+			}
+		}
+  }
+}
