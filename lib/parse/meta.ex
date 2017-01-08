@@ -3,5 +3,5 @@ defmodule SwaggerPhoenix.Parse.Meta.Model do
 end
 
 defmodule SwaggerPhoenix.Parse.Meta do
-  defstruct [:models]
+  defstruct [models: []]
 end

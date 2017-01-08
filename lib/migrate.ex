@@ -1,0 +1,93 @@
+defmodule SwaggerPhoenix.Migrate do
+
+  alias SwaggerPhoenix.Parse
+  alias SwaggerPhoenix.Migrations.Meta
+  alias SwaggerPhoenix.Util
+
+  require IEx
+
+  def from_model(%Parse.Meta.Model{singular: name} = model) do
+    # get existing meta state
+    {:ok, current} = existing_model_state()
+
+    {:ok, migration} = get_migration(current, model)
+
+    {action, meta} = if is_create(current, model) do
+      {:create, %Parse.Meta{models: [model | []]}}
+    end
+
+    meta |> write_state
+
+    migration |> write_migration(action, name)
+
+    {:ok, migration}
+
+    # compare to existing
+    # scaffold intelligent ecto migrations
+      # find model adds
+      #   any model no in exsting state is an add
+      # find model updates
+      #   find added columns
+      #   find removed columns
+      #   a column is name:type
+      #   everything will be an add and a delete
+      #   so if going from name:int to name:string
+      #   it will add
+      # find deletes
+      #   any model not in new state is a delete
+
+    # folder_exists?(model)
+  end
+
+  def get_migration(current, model) do
+    if is_create(current, model) do
+      {:ok, %Meta.Migration{operation: :create, model: model}}
+    end
+  end
+
+  def is_create(%SwaggerPhoenix.Parse.Meta{models: []}, _model) do
+    true
+  end
+
+  @migration_folder "swagger_migrations"
+
+  @doc """
+  This will return the current state of the swagger model. If the current state
+  is empty it will create the model and write the empty state to the state
+  .model file.
+  """
+  def existing_model_state do
+    with {:files, {:ok, files}} <- {:files, File.ls},
+         {:folder, true} <- {:folder, files |> Enum.any?(&(&1 == @migration_folder ))},
+         {:state_file, {:ok, current_state}} <- File.read(@migration_folder <> "//current_state.model")
+      do
+        :ok
+      else
+        {:files, _} -> {:error, "error reading files"}
+        {:folder, false} -> init_state()
+        {:state_file, _} -> init_state()
+      _ -> :error
+    end
+  end
+
+  def init_state do
+    File.mkdir(@migration_folder)
+    init_state = %Parse.Meta{}
+    init_state |> write_state
+    {:ok, init_state}
+  end
+
+  defp write_state(state) do
+    @migration_folder <> "//current_state.model"
+    |> File.write("#{inspect state}")
+  end
+
+  defp write_migration(migration, action, name) do
+    "#{@migration_folder}//#{Util.timestamp()}_#{action}_#{name}"
+    |> File.write("#{inspect migration}")
+  end
+
+  def history_file_contains(migration_file, model) do
+    search = "Parse.Meta.Model{singular: \"#{model}\""
+  end
+end
