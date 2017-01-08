@@ -51,7 +51,11 @@ defmodule SwaggerPhoenix.Migrate do
 
 
       adds = model.attr -- old_model.attr
-      {:ok, %Meta.Migration{operation: :update, model: model, added_columns: adds }}
+      deletes = old_model.attr -- model.attr
+      {:ok, %Meta.Migration{operation: :update,
+                            model: model,
+                            added_columns: adds,
+                            deleted_columns: deletes }}
     end
   end
 
