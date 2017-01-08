@@ -83,7 +83,7 @@ defmodule SwaggerPhoenix.Migrate do
   end
 
   defp write_migration(migration, action, name) do
-    "#{@migration_folder}//#{Util.timestamp()}_#{action}_#{name}"
+    "#{@migration_folder}//#{Util.timestamp()}_#{action}_#{name |> String.downcase}.migration"
     |> File.write("#{inspect migration}")
   end
 
