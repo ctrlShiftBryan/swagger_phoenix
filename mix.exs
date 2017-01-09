@@ -12,7 +12,7 @@ defmodule SwaggerPhoenix.Mixfile do
 
   # Configuration for the OTP application
   def application do
-    [applications: [:logger]]
+    [mod: {SwaggerPhoenix, []}, applications: [:logger]]
   end
 
   defp deps do

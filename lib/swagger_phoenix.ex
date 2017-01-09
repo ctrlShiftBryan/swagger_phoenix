@@ -1,5 +1,12 @@
 defmodule SwaggerPhoenix do
-  def test do
-    "Hello 2"
+  @moduledoc """
+  The SwaggerPhoenix Application
+  """
+
+  use Application
+
+  def start(_, _) do
+    IO.puts "starting SwaggerPhoenix"
+    Agent.start_link fn -> [] end
   end
 end

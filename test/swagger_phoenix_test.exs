@@ -2,7 +2,20 @@ defmodule SwaggerPhoenixTest do
   use ExUnit.Case
   doctest SwaggerPhoenix
 
+  alias SwaggerPhoenix.Parse.Meta
+  @tag :wip
   test "the truth" do
-    assert 1 + 1 == 2
+    meta = %Meta{
+      models: [%Meta.Model{singular: "Order",
+                           plural: "orders",
+                           attr: [complete: :boolean,
+                                  id: :integer,
+                                  petId: :integer,
+                                  quantity: :integer,
+                                  shipDate: :string,
+                                  status: :string,
+                                 ]}]
+    }
+
   end
 end
