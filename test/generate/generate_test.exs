@@ -1,12 +1,10 @@
 defmodule SwaggerPhoenixTest.GenerateTest do
   use ExUnit.Case
 
-  alias SwaggerPhoenix.Migrations.Meta
-  alias SwaggerPhoenix.Parse
-  alias SwaggerPhoenix.Generate
+  alias SwaggerPhoenix.Parse.Meta
+
   describe "generator" do
     test "defaults to empty model " do
-
       model = %Meta.Model{singular: "Order",
                           plural: "orders",
                           attr: [complete: :boolean,
@@ -14,9 +12,11 @@ defmodule SwaggerPhoenixTest.GenerateTest do
                                 petId: :integer,
                                 quantity: :integer,
                                 shipDate: :string,
-                                status: :string,
+                                status: :string
                                 ]}
 
 
     end
   end
+
+end
