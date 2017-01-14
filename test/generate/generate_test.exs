@@ -15,6 +15,8 @@ defmodule SwaggerPhoenixTest.GenerateTest do
                             complete: :boolean
                             ]}
 
+  require IEx
+
   describe "generator tests" do
     test "attr string is formatted properly" do
       output = Generate.attr_to_string(@model.attr)
@@ -27,6 +29,14 @@ defmodule SwaggerPhoenixTest.GenerateTest do
     test "ast is scaffolded properly" do
       output = Generate.model_ast(@model)
       assert  output == Models.expected_ast
+      File.rm_rf!("priv")
+    end
+
+    test "model is genorated" do
+      Generate.model(@model)
+
+      IEx.pry
+
       File.rm_rf!("priv")
     end
   end

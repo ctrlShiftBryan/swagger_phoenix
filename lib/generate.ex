@@ -16,6 +16,40 @@ defmodule SwaggerPhoenix.Generate do
 
 
     Mix.Tasks.SwaggerPhoenix.Gen.Model.run(scaffold_string)
-    # IEx.pry
+  end
+
+  def model(model) do
+    with {:ok, ast} <- model |> model_ast do
+      ast |> Code.eval_quoted
+    end
+  end
+end
+
+defmodule SwaggerPhoenix.Web do
+  @moduledoc """
+  A module that keeps using definitions for controllers,
+  views and so on.
+
+  This can be used in your application as:
+
+  use Foo.Web, :controller
+  use Foo.Web, :view
+
+  The definitions below will be executed for every view,
+  controller, etc, so keep them short and clean, focused
+  on imports, uses and aliases.
+
+  Do NOT define functions inside the quoted expressions
+  below.
+  """
+
+  def model do
+    quote do
+      use Ecto.Schema
+
+      import Ecto
+      import Ecto.Changeset
+      import Ecto.Query
+    end
   end
 end
