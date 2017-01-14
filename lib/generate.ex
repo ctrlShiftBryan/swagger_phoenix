@@ -6,12 +6,16 @@ defmodule SwaggerPhoenix.Generate do
   def attr_to_string(attr) do
     attr
     |> Enum.sort_by(fn({k, _}) -> k end)
-    |> do_attr_to_string
+    |> Enum.map(fn({name,type}) -> "#{name}:#{type}" end)
   end
-  defp do_attr_to_string([{name, type} | []]) do
-    "#{name}:#{type}"
-  end
-  defp do_attr_to_string([{name, type} | tail]) do
-    "#{name}:#{type} " <> attr_to_string(tail)
+
+  require IEx
+  def model_ast(model) do
+    scaffold_string = ["#{model.singular}", "#{model.plural}"] ++
+                      (model.attr |> attr_to_string)
+
+
+    Mix.Tasks.SwaggerPhoenix.Gen.Model.run(scaffold_string)
+    # IEx.pry
   end
 end

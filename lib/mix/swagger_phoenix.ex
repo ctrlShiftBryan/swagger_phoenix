@@ -17,7 +17,7 @@ defmodule Mix.SwaggerPhoenix do
   def copy_from(apps, source_dir, target_dir, binding, mapping) when is_list(mapping) do
     roots = Enum.map(apps, &to_app_source(&1, source_dir))
 
-    for {format, source_file_path, target_file_path} <- mapping do
+    results = for {format, source_file_path, target_file_path} <- mapping do
       source =
         Enum.find_value(roots, fn root ->
           source = Path.join(root, source_file_path)
@@ -31,11 +31,25 @@ defmodule Mix.SwaggerPhoenix do
           :text -> File.read!(source)
           :eex  -> EEx.eval_file(source, binding)
         end
-      IO.inspect {format, target, contents |> String.slice(0..100)}
       if target |> String.contains?("repo/migrations") do
         Mix.Generator.create_file(target, contents)
+      else
+        contents |> Code.string_to_quoted
       end
     end
+
+    ast_results = results
+                  |> Enum.filter(fn(x) -> x != :ok end)
+
+    overall_status = case ast_results |> Enum.all?(fn({status, _}) -> status == :ok end) do
+                       true -> :ok
+                       false -> :error
+                     end
+
+    just_ast = ast_results
+               |> Enum.map(fn {:ok, ast} -> ast end)
+
+    {overall_status, just_ast}
   end
 
   defp to_app_source(path, source_dir) when is_binary(path),

@@ -82,6 +82,7 @@ defmodule Mix.Tasks.SwaggerPhoenix.Gen.Model do
   switches, e.g. `--no-binary-id` to use normal ids despite the default
   configuration or `--migration` to force generation of the migration.
   """
+  require IEx
   def run(args) do
     switches = [migration: :boolean, binary_id: :boolean, instructions: :string]
 
@@ -111,18 +112,8 @@ defmodule Mix.Tasks.SwaggerPhoenix.Gen.Model do
       {:eex, "model_test.exs", "test/models/#{path}_test.exs"},
     ] ++ migration(opts[:migration], path)
 
+
     Mix.SwaggerPhoenix.copy_from paths(), "priv/templates/phoenix.gen.model", "", binding, files
-
-    # Print any extra instruction given by parent generators
-    Mix.shell.info opts[:instructions] || ""
-
-    if opts[:migration] != false do
-      Mix.shell.info """
-      Remember to update your repository by running migrations:
-
-          $ mix ecto.migrate
-      """
-    end
   end
 
   defp validate_args!([_, plural | _] = args) do
