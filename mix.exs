@@ -23,8 +23,8 @@ defmodule SwaggerPhoenix.Mixfile do
   defp deps do
     [
       {:poison, "~> 2.2 or ~> 3.0"},
-      {:phoenix_ecto, "~> 3.0"},
-      {:phoenix, path: "../phoenix", override: true}
+      {:phoenix_ecto, "~> 3.0", only: :test},
+      {:phoenix, path: "../phoenix", override: true, only: :test}
     ]
   end
 end
