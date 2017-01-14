@@ -15,14 +15,12 @@ defmodule SwaggerPhoenixTest.GenerateTest do
                             complete: :boolean
                             ]}
 
-  require IEx
-
   describe "generator tests" do
+    @tag :wip
     test "attr string is formatted properly" do
       output = Generate.attr_to_string(@model.attr)
-      expected = ["complete:boolean", "id:integer", "petId:integer", "quantity:integer", "shipDate:string", "status:string"]
+      expected = ["complete:boolean", "petId:integer", "quantity:integer", "shipDate:string", "status:string"]
       assert  output == expected
-
       File.rm_rf!("priv")
     end
 
@@ -32,13 +30,11 @@ defmodule SwaggerPhoenixTest.GenerateTest do
       File.rm_rf!("priv")
     end
 
-    test "model is genorated" do
-      Generate.model(@model)
-
-      IEx.pry
-
+    test "model is generated" do
+      use GenerateMacro
+      order = %SwaggerPhoenix.Order2{complete: true}
+      assert order.complete == true
       File.rm_rf!("priv")
     end
   end
-
 end

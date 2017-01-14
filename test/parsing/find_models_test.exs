@@ -4,8 +4,6 @@ defmodule SwaggerPhoenixTest.FindModelsTest do
 
   alias SwaggerPhoenix.Parse.Meta
 
-  require IEx
-
   test "can find single model" do
     {:ok, model} = SwaggerPhoenix.Parse.json("test/fixtures/single_model_swagger.json")
 

@@ -4,8 +4,6 @@ defmodule SwaggerPhoenix.Migrate do
   alias SwaggerPhoenix.Migrations.Meta
   alias SwaggerPhoenix.Util
 
-  require IEx
-
   def from_model(%Parse.Meta.Model{singular: name} = model) do
 
     {:ok, current} = existing_model_state()

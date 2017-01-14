@@ -82,7 +82,6 @@ defmodule Mix.Tasks.SwaggerPhoenix.Gen.Model do
   switches, e.g. `--no-binary-id` to use normal ids despite the default
   configuration or `--migration` to force generation of the migration.
   """
-  require IEx
   def run(args) do
     switches = [migration: :boolean, binary_id: :boolean, instructions: :string]
 

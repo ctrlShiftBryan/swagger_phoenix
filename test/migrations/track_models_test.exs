@@ -5,7 +5,6 @@ defmodule SwaggerPhoenixTest.TrackModelsTest do
   alias SwaggerPhoenix.Migrations.Meta
   alias SwaggerPhoenix.Parse
 
-  require IEx
   describe "initial get state" do
 
     test "defaults to empty model " do

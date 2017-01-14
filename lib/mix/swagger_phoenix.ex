@@ -13,7 +13,6 @@ defmodule Mix.SwaggerPhoenix do
   Files are evaluated against EEx according to
   the given binding.
   """
-  require IEx
   def copy_from(apps, source_dir, target_dir, binding, mapping) when is_list(mapping) do
     roots = Enum.map(apps, &to_app_source(&1, source_dir))
 

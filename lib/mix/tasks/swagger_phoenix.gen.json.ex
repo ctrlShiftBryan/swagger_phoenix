@@ -23,7 +23,6 @@ defmodule Mix.Tasks.SwaggerPhoenix.Gen.Json do
   with `--no-model`. Read the documentation for `phoenix.gen.model`
   for more information on attributes and namespaced resources.
   """
-  require IEx
   def run(args) do
     switches = [binary_id: :boolean, model: :boolean]
 
