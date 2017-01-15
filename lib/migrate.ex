@@ -1,5 +1,7 @@
 defmodule SwaggerPhoenix.Migrate do
-
+  @moduledoc """
+  This module handles migrations of the swagger file.
+  """
   alias SwaggerPhoenix.Parse
   alias SwaggerPhoenix.Migrations.Meta
   alias SwaggerPhoenix.Util
@@ -15,27 +17,11 @@ defmodule SwaggerPhoenix.Migrate do
       update_index = current_code.models
                      |> Enum.find_index(&(&1.singular == model.singular && &1.plural == model.plural))
       new_models = current_code.models |> List.replace_at(update_index, model)
-      {:update, %Parse.Meta{ current_code | models: new_models}}
+      {:update, %Parse.Meta{current_code | models: new_models}}
     end
     meta |> write_state
     migration |> write_migration(action, name)
     {:ok, migration}
-
-    # compare to existing
-    # scaffold intelligent ecto migrations
-      # find model adds
-      #   any model no in exsting state is an add
-      # find model updates
-      #   find added columns
-      #   find removed columns
-      #   a column is name:type
-      #   everything will be an add and a delete
-      #   so if going from name:int to name:string
-      #   it will add
-      # find deletes
-      #   any model not in new state is a delete
-
-    # folder_exists?(model)
   end
 
   def get_migration(current, model) do
@@ -53,7 +39,7 @@ defmodule SwaggerPhoenix.Migrate do
       {:ok, %Meta.Migration{operation: :update,
                             model: model,
                             added_columns: adds,
-                            deleted_columns: deletes }}
+                            deleted_columns: deletes}}
     end
   end
 
@@ -79,7 +65,7 @@ defmodule SwaggerPhoenix.Migrate do
   """
   def existing_model_state do
     with {:files, {:ok, files}} <- {:files, File.ls},
-         {:folder, true} <- {:folder, files |> Enum.any?(&(&1 == @migration_folder ))},
+         {:folder, true} <- {:folder, files |> Enum.any?(&(&1 == @migration_folder))},
          {:state_file, {:ok, current_state}} <- {:state_file, File.read(@migration_folder <> "//current_state.model")}
       do
         {:ok, current_state}
@@ -93,9 +79,9 @@ defmodule SwaggerPhoenix.Migrate do
 
   def init_state do
     File.mkdir(@migration_folder)
-    init_state = %Parse.Meta{}
-    init_state |> write_state
-    {:ok, init_state}
+    state = %Parse.Meta{}
+    state |> write_state
+    {:ok, state}
   end
 
   defp write_state(state) when state |> is_bitstring do

@@ -1,4 +1,7 @@
 defmodule SwaggerPhoenix.Generate do
+  @moduledoc """
+  These are used to turn the swagger model into the ecto schemas and tests.
+  """
 
   @doc """
   This will turn a list of model attr into the string needed for the model scaffolder

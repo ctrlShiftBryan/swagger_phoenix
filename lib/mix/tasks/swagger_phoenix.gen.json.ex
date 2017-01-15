@@ -36,7 +36,12 @@ defmodule Mix.Tasks.SwaggerPhoenix.Gen.Json do
     attrs   = Mix.Phoenix.attrs(attrs)
     binding = Mix.Phoenix.inflect(singular)
     path    = binding[:path]
-    route   = String.split(path, "/") |> Enum.drop(-1) |> Kernel.++([plural]) |> Enum.join("/")
+    route   = path 
+              |> String.split("/") 
+              |> Enum.drop(-1) 
+              |> Kernel.++([plural]) 
+              |> Enum.join("/")
+
     binding = binding ++ [plural: plural, route: route,
                           sample_id: sample_id(opts),
                           attrs: attrs, params: Mix.Phoenix.params(attrs)]

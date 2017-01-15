@@ -24,7 +24,8 @@ defmodule SwaggerPhoenix.Mixfile do
     [
       {:poison, "~> 2.2 or ~> 3.0"},
       {:phoenix_ecto, "~> 3.0", only: :test},
-      {:phoenix, path: "../phoenix", override: true, only: :test}
+      {:phoenix, path: "../phoenix", override: true, only: :test},
+      {:credo, "~> 0.5", only: [:dev, :test]}
     ]
   end
 end

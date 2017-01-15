@@ -1,4 +1,8 @@
 defmodule SwaggerPhoenix.Util do
+  @moduledoc """
+  Various reusable utilities
+  """
+
   @doc """
   returns a timestamp in the format 20170101120012. YYYYMMDDHHmmss
   """

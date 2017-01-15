@@ -87,17 +87,17 @@ defmodule Mix.SwaggerPhoenix do
        path: "admin/super_user"]
   """
   def inflect(singular) do
-    base     = Mix.Phoenix.base
+    my_base     = Mix.Phoenix.base
     scoped   = Phoenix.Naming.camelize(singular)
     path     = Phoenix.Naming.underscore(scoped)
-    singular = String.split(path, "/") |> List.last
-    module   = Module.concat(base, scoped) |> inspect
-    alias    = String.split(module, ".") |> List.last
+    singular = path |> String.split("/") |> List.last
+    module   = my_base |> Module.concat(scoped) |> inspect
+    my_alias    = module |> String.split(".") |> List.last
     human    = Phoenix.Naming.humanize(singular)
 
-    [alias: alias,
+    [alias: my_alias,
      human: human,
-     base: base,
+     base: my_base,
      module: module,
      scoped: scoped,
      singular: singular,
@@ -199,23 +199,19 @@ defmodule Mix.SwaggerPhoenix do
     {String.to_atom(key), {String.to_atom(comp), String.to_atom(value)}}
   end
 
-  defp type_to_default(t) do
-    case t do
-        {:array, _}     -> []
-        :integer        -> 42
-        :float          -> "120.5"
-        :decimal        -> "120.5"
-        :boolean        -> true
-        :map            -> %{}
-        :text           -> "some content"
-        :date           -> %{year: 2010, month: 4, day: 17}
-        :time           -> %{hour: 14, minute: 0, second: 0}
-        :uuid           -> "7488a646-e31f-11e4-aace-600308960662"
-        :utc_datetime   -> %{year: 2010, month: 4, day: 17, hour: 14, minute: 0, second: 0}
-        :naive_datetime -> %{year: 2010, month: 4, day: 17, hour: 14, minute: 0, second: 0}
-        _               -> "some content"
-    end
-  end
+  defp type_to_default({:array, _}), do: []
+  defp type_to_default(:integer), do: 42
+  defp type_to_default(:float), do: "120.5"
+  defp type_to_default(:decimal), do: "120.5"
+  defp type_to_default(:boolean), do: true
+  defp type_to_default(:map), do: %{}
+  defp type_to_default(:text), do: "some content"
+  defp type_to_default(:date), do: %{year: 2010, month: 4, day: 17}
+  defp type_to_default(:time), do: %{hour: 14, minute: 0, second: 0}
+  defp type_to_default(:uuid), do: "7488a646-e31f-11e4-aace-600308960662"
+  defp type_to_default(:utc_datetime), do: %{year: 2010, month: 4, day: 17, hour: 14, minute: 0, second: 0}
+  defp type_to_default(:naive_datetime), do: %{year: 2010, month: 4, day: 17, hour: 14, minute: 0, second: 0}
+  defp type_to_default(_), do: "some content"
 
   defp validate_attr!({_name, type} = attr) when type in @valid_attributes, do: attr
   defp validate_attr!({_name, {type, _}} = attr) when type in @valid_attributes, do: attr
