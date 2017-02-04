@@ -20,7 +20,13 @@ defmodule SwaggerPhoenix do
   end
 
   defmacro __using__(_opts) do
-    Generate.model(@model)
+      with {:ok, model_string_ast} <- File.read("swagger_migrations/current_state.model"),
+        {{:ok, state_from_file},[]} <- model_string_ast |> Code.string_to_quoted |> Code.eval_quoted
+      do
+        for model <- state_from_file.models do
+          model |> Generate.model
+        end
+      end
     quote do
     end
   end
