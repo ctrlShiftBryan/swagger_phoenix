@@ -1,12 +1,27 @@
 defmodule SwaggerPhoenix do
   @moduledoc """
-  The SwaggerPhoenix Application
+  The macro that generates everything.
   """
 
-  use Application
+  alias SwaggerPhoenix.Parse.Meta
+  alias SwaggerPhoenix.Generate
 
-  def start(_, _) do
-    IO.puts "starting SwaggerPhoenix"
-    Agent.start_link fn -> [] end
+  @model %Meta.Model{singular: "Order2",
+                     plural: "orders",
+                     attr: [id: :integer,
+                            petId: :integer,
+                            quantity: :integer,
+                            shipDate: :string,
+                            status: :string,
+                            complete: :boolean
+                           ]}
+  def model do
+    @model
+  end
+
+  defmacro __using__(_opts) do
+    Generate.model(@model)
+    quote do
+    end
   end
 end

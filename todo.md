@@ -45,3 +45,8 @@ how far should we deviate from rest?
 should we remove actions? for example deletes?
 
 always 200's?
+
+
+1. swagger migrate create .migration files
+1. current state is used for both creating new diffs, and running the generation at compile time.
+1. current_state prevents having to apply entire history of migrations to generate
