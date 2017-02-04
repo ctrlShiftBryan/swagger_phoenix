@@ -11,10 +11,15 @@ defmodule Mix.Tasks.SwaggerPhoenix.Migrate do
 
   defp process({:json, file}) do
     IO.puts "swagger.json found"
+
     {:ok, model_state} =  file
                           |> SwaggerPhoenix.Parse.json
+
+    # this is temp. until we add incremental migrations
+    File.rm_rf "swagger_migrations"
     File.mkdir("swagger_migrations")
-    File.write("current_state.model", model_state)
+
+    File.write("swagger_migrations/current_state.model", "#{inspect model_state}")
     IO.puts "swagger_migrations/current_state.model created!"
   end
   defp process({:yaml, file}) do
