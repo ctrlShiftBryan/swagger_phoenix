@@ -37,7 +37,7 @@ defmodule SwaggerPhoenixTest.TrackModelsTest do
       File.rm_rf("swagger_migrations")
       init_swagger = "test/fixtures/migrations/init_model_swagger.json"
       {:ok, meta} = init_swagger |> Parse.json
-      [first_model | _x ] = meta.models
+      [first_model | _x] = meta.models
       {:ok, output} = SwaggerPhoenix.Migrate.from_model(first_model)
       expected = %Meta.Migration{
         operation: :create,
@@ -56,7 +56,7 @@ defmodule SwaggerPhoenixTest.TrackModelsTest do
       # create the initial migration
       init_swagger = "test/fixtures/migrations/model_add_field_swagger.json"
       {:ok, meta} = init_swagger |> Parse.json
-      [first_model | _x ] = meta.models
+      [first_model | _x] = meta.models
       {:ok, output} = SwaggerPhoenix.Migrate.from_model(first_model)
 
       expected = %Meta.Migration{
@@ -71,7 +71,7 @@ defmodule SwaggerPhoenixTest.TrackModelsTest do
       # add an update migration
       updated_swagger = "test/fixtures/migrations/init_model_swagger.json"
       {:ok, meta} = updated_swagger |> Parse.json
-      [first_model | _x ] = meta.models
+      [first_model | _x] = meta.models
       {:ok, output} = SwaggerPhoenix.Migrate.from_model(first_model)
       expected = %Meta.Migration{
         operation: :update,
@@ -101,7 +101,7 @@ defmodule SwaggerPhoenixTest.TrackModelsTest do
       File.rm_rf("swagger_migrations")
       init_swagger = "test/fixtures/migrations/init_model_swagger.json"
       {:ok, meta} = init_swagger |> Parse.json
-      [first_model | _x ] = meta.models
+      [first_model | _x] = meta.models
       {:ok, output} = SwaggerPhoenix.Migrate.from_model(first_model)
 
       expected = %Meta.Migration{
@@ -114,7 +114,7 @@ defmodule SwaggerPhoenixTest.TrackModelsTest do
 
       updated_swagger = "test/fixtures/migrations/model_add_field_swagger.json"
       {:ok, meta} = updated_swagger |> Parse.json
-      [first_model | _x ] = meta.models
+      [first_model | _x] = meta.models
       {:ok, output} = SwaggerPhoenix.Migrate.from_model(first_model)
       expected = %Meta.Migration{
         operation: :update,

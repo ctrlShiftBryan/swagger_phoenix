@@ -32,7 +32,7 @@ defmodule SwaggerPhoenixTest.GenerateTest do
     end
 
     test "given a model we can Generate.Model inside of a Macro" do
-      use GenerateMacro
+      use SwaggerPhoenixTest.GenerateTest.GenerateMacro
       order = %SwaggerPhoenix.Order2{complete: true}
       assert order.complete == true
       File.rm_rf!("priv")

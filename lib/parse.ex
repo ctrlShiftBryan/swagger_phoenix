@@ -24,7 +24,6 @@ defmodule SwaggerPhoenix.Parse do
     properties = for {"properties" ,properties = %{}} <- properties_holder, {property_name, meta} <- properties do
         {property_name |> String.to_atom, meta |> get_property_type}
     end
-    
     properties
     |> Enum.sort_by(fn({k, _}) -> k end)
   end
