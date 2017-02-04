@@ -1,5 +1,7 @@
 defmodule GenerateMacro do
-
+  @moduledoc """
+  This is used to test that our model can be generated in a macro.
+  """
   def model do
     @model
   end

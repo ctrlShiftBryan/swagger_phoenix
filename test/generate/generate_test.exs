@@ -1,4 +1,5 @@
 defmodule SwaggerPhoenixTest.GenerateTest do
+  @moduledoc "tests for generating models"
   use ExUnit.Case
 
   alias SwaggerPhoenix.Parse.Meta
@@ -15,22 +16,22 @@ defmodule SwaggerPhoenixTest.GenerateTest do
                             complete: :boolean
                             ]}
 
-  describe "generator tests" do
+  describe "model generator tests" do
     @tag :wip
-    test "attr string is formatted properly" do
+    test "given a list of Meta.Model attr, parameters are properly formatted for scaffolding" do
       output = Generate.attr_to_string(@model.attr)
       expected = ["complete:boolean", "petId:integer", "quantity:integer", "shipDate:string", "status:string"]
       assert  output == expected
       File.rm_rf!("priv")
     end
 
-    test "ast is scaffolded properly" do
+    test "given an entire Meta.Model the AST for the model is properly generated" do
       output = Generate.model_ast(@model)
       assert  output == Models.expected_ast
       File.rm_rf!("priv")
     end
 
-    test "model is generated" do
+    test "given a model we can Generate.Model inside of a Macro" do
       use GenerateMacro
       order = %SwaggerPhoenix.Order2{complete: true}
       assert order.complete == true

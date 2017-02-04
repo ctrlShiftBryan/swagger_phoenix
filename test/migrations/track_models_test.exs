@@ -15,7 +15,7 @@ defmodule SwaggerPhoenixTest.TrackModelsTest do
 
     test "creates migrations folder " do
       File.rm_rf("swagger_migrations")
-      {:ok, output} = SwaggerPhoenix.Migrate.existing_model_state
+      {:ok, _output} = SwaggerPhoenix.Migrate.existing_model_state
       folder_created = File.ls!
                        |> Enum.any?(&(&1 == "swagger_migrations"))
       assert true == folder_created
@@ -23,9 +23,10 @@ defmodule SwaggerPhoenixTest.TrackModelsTest do
 
     test "creates model state file " do
       File.rm_rf("swagger_migrations")
-      {:ok, output} = SwaggerPhoenix.Migrate.existing_model_state
+      {:ok, _output} = SwaggerPhoenix.Migrate.existing_model_state
 
-      state_file_created = File.ls!("swagger_migrations")
+      state_file_created = "swagger_migrations"
+                           |> File.ls!
                            |> Enum.any?(&(&1 == "current_state.model"))
       assert true == state_file_created
     end

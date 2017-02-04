@@ -1,4 +1,8 @@
 defmodule SwaggerPhoenix.Web do
+  @moduledoc """
+  This is here as a stub so that the generated code for the test will compile
+  since we never really ran 'mix phoenix.new'
+  """
   def model do
     quote do
       use Ecto.Schema
@@ -13,5 +17,8 @@ defmodule SwaggerPhoenix.Web do
 end
 
 defmodule SwaggerPhoenix.ModelCase do
+  @moduledoc """
+  Referenced by the generated code
+  """
   use ExUnit.CaseTemplate
 end
