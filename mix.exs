@@ -8,6 +8,8 @@ defmodule SwaggerPhoenix.Mixfile do
      elixirc_paths: elixirc_paths(Mix.env),
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+     test_coverage: [tool: ExCoveralls],
+     preferred_cli_env: ["coveralls": :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test],
      deps: deps()]
   end
 
@@ -25,7 +27,8 @@ defmodule SwaggerPhoenix.Mixfile do
       {:poison, "~> 2.2 or ~> 3.0"},
       {:phoenix_ecto, "~> 3.0", only: :test},
       {:phoenix, path: "../phoenix", override: true, only: :test},
-      {:credo, "~> 0.5", only: [:dev, :test]}
+      {:credo, "~> 0.5", only: [:dev, :test]},
+      {:excoveralls, "~> 0.5", only: :test}
     ]
   end
 end
